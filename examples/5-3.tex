@@ -1,0 +1,40 @@
+\begin{example}
+Find all solutions of the differential equation given that $y(x) = x$ is a
+solution:
+\begin{equation}
+  x^2 y'' + 2 x y' - 2 y = 0 
+\end{equation}
+\noindent\emph{Solution}
+\[
+  x^2 y'' + 2 x y' - 2 y = 0 \Leftrightarrow y'' + 2 \frac{y'}{x} - 2
+  \frac{y}{x^2} = 0, x \neq 0
+\]
+Let $y_2(x) = v(x) x$ and thus:
+\[
+  y_2' = v' x + v
+\]
+\[
+  y_2'' = v'' x + 2 v'
+\]
+then
+\begin{multline*}
+  y_2'' + 2 \frac{y_2'}{x} - 2 \frac{y_2}{x^2} = v'' x + 2 \frac{v' x}{x} + 2
+  \frac{v' x + v - v}{x} = 0 \Leftrightarrow \\ v'' x + 4 \frac{v' x}{x}
+  \Leftrightarrow v'' x = - 4 v' \Leftrightarrow v'' = - 4 \frac{v'}{x}, x \neq 0
+\end{multline*}
+Let $w = v'$:
+\begin{multline*}
+  w' = -4 w \frac{1}{x} \Leftrightarrow \frac{dw}{w} = -\frac{4}{x} dx
+  \Rightarrow \int \frac{dw}{w} = -4 \int \frac{1}{x} \Leftrightarrow \\
+  \ln |w| = -4 \ln |x| + C_1, C_1 \in \Re \Leftrightarrow w = x C_2, C_2 = -4
+  e^{C_1}, x \neq 0
+\end{multline*}
+Now
+\begin{multline*}
+  v' = x C_2 \Rightarrow \int \frac{dv}{dx} = \int x C_2 \Leftrightarrow \int
+  dv = C_2 \int x dx \Leftrightarrow v = C_2 \frac{x^2}{2} + C_3
+\end{multline*}
+As $W(y_1, y_2) = f_1^2 v' = C_2 x^3 \neq 0$ given that $x > 0$ for all $x \in
+\Re$, then $y = x C_2 3^2 + C_3 x, C_2, C_3 \in \Re$ represents all solution
+of Equation (5).
+\end{example}

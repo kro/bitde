@@ -1,0 +1,28 @@
+\begin{example}
+Show that the function pair $(u, v)$ where $u(x) = x^2$ and $v = x|x|$ is
+linearly independent.
+
+\noindent \emph{Solution} 
+\begin{enumerate}
+\item For $x \geq 0$: $C_1 u(x) + C_2 v(x) = 0 \Leftrightarrow C_1 x^2 + C_2
+x^2 = x^2 (C_1 + C_2) = 0 \Rightarrow C_1 = -C_2, \forall x \in \Re$
+\item For $x < 0$: $C_1 u(x) + C_2 v(x) = C_1 x^2 - C_2 x^2 = x^2 (C_1 - C_2) =
+0 \Rightarrow C_1 = C_2, \forall x \in \Re$
+\end{enumerate}
+From (1) and (2) follows that $C_1 = C_2 = -C_2$, which does not hold when
+either $C_1$ or $C_2$ must be different than zero.
+\end{example}
+
+\begin{example}
+For which parameter values $a, b \in \Re$ the function pair $(e^{ax}, e^{bx})$
+is linearly independent.
+
+\noindent\emph{Solution}
+Let us examine for which parameter values $a \in \Re$ the function pair
+$(e^{ax}, e^{bx})$ is linearly dependent:
+\[
+e^{ax} = C e^{bx} \Leftrightarrow ax = \ln C + bx \Leftrightarrow x (a - b) =
+\ln C \Leftrightarrow a = \frac{\ln C}{x} + b, C \in \Re, C > 0, x \neq 0
+\]
+Then $a \neq \frac{\ln C}{x} + b$. Similary for parameter $b$.
+\end{example}

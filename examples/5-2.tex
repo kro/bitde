@@ -1,0 +1,32 @@
+\begin{example}
+Find all solutions of the differential equation given that $f(t) = e^{-t}$ is a
+solution:
+\begin{equation}
+  f''(t) + 2 f'(t) + f(t) = 0
+\end{equation}
+\noindent\emph{Solution} 
+
+Surely the solution $f(t) = e^{-t} > 0, \forall t \in \Re$. Let $f_2(t) = f_1(t) v(t)$.
+\[
+  f_2' = f_1' v + f_1 v'
+\]
+\[
+  f_2'' = f_1'' v + f_1' v' + f_1' v' + f_1 v'' = f_1'' v + 2 f_1' v' + f_1 v''
+\]
+Now Equation (4) can be written as:
+\begin{multline*}
+  f_1'' v + 2 f_1'v' + f_1 v'' + 2 (f_1' v + f_1 v') + f_1 v = f_1 v'' + (2
+  f_1' + 2 f_1 ) v' + (f_1'' + 2 f_1' + f_1) v = \\
+  f_1 v'' + (2 f_1' + 2 f_1) v' = v'' + 2 \left(\frac{f_1' + f_1}{f_1}\right) v' = 0
+\end{multline*}
+Let $w = v'$:
+\begin{multline*}
+  w' + 2 \left(\frac{f_1' + f_1}{f_1}\right) w = 0 \Leftrightarrow w = e^{-2
+  \int (\frac{f_1'}{f_1} + 1)} \Leftrightarrow \\ v = \int \left [ e^{-2 \int
+  (\frac{f'}{f} + 1)} \right ] = \int (1 + C_1) = C_1 t + \frac{t^2}{2} + C_2,
+  C_1, C_2 \in \Re
+\end{multline*}
+As $W(f_1, f_2) = v' f_1^2 = e^{-2 \int (\frac{f_1'}{f_1} + 1)} e^{-2t} \neq
+0$, then $f_2(t) = e^{-t} \left [ C_1 t + \frac{t^2}{2} + C_2 \right ]$ is all
+solutions for Equation (4).
+\end{example}

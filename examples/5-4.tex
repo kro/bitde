@@ -1,0 +1,35 @@
+\begin{example}
+\noindent\emph{Solution} Let $y = e^{\lambda x}$:
+\[
+  y' = \lambda e^{\lambda x}
+\]
+\[
+  y'' = \lambda^2 e^{\lambda x}
+\]
+and thus:
+\[
+  y'' + a y' + b = 0 \Leftrightarrow \lambda^2 e^{\lambda x} + a \lambda
+  e^{\lambda x} + b e^{\lambda x} = 0
+\]
+Let $\lambda_1 = \alpha + \beta i$ and $\lambda_2 = \alpha - \beta i$, the
+solutions of $y$ can be written as:
+\[
+  y(x) = A e^{\lambda_1 x} + B e^{\lambda_2 x} = A e^{(\alpha + \beta i) x} + B
+  e^{(\alpha - \beta i) x} = A e^{\alpha x} e^{x \beta i} + B e^{\alpha x} e^{- x
+  \beta i}
+\]
+and since $e^{k + l i} = e^{k} [ \cos(l) + \sin(l) i ]$:
+\[
+  A e^{\alpha x} e^{x \beta i} + B e^{\alpha x} e^{- x \beta i} ] = A e^{\alpha x}
+  (\cos(\beta) + \sin(\beta) i) + B e^{\alpha x}  (\cos(- \beta) + \sin(- \beta) i) 
+\]
+Now $\sin(-\beta x) = -\sin(\beta x)$ and $\cos(-\beta x) = \cos(\beta x)$,
+which gives:
+\begin{multline*}
+  A e^{\alpha x} (\cos(\beta) + \sin(\beta) i) + B e^{\alpha x} (\cos(- \beta)
+  + \sin(- \beta) i) = \\ A e^{\alpha x} (\cos(\beta) + \sin(\beta) i) + B
+  e^{\alpha} (\cos(\beta) - \sin(- \beta) i) = C_1 e^{\alpha x} \sin (\beta x) +
+  C_2 e^{\alpha x} \cos(\beta x)
+\end{multline*} 
+where $C_1 = (A + B) i$ and $C_2 = (A - B)$.
+\end{example}

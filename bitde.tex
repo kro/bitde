@@ -1,0 +1,426 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{defns}[defn]{Definitions}
+\newtheorem{example}[defn]{Example}
+\newtheorem{thm}{Theorem}[section]
+\begin{document}
+\title{Brief Introduction to Differential Equations\\ (working version)}
+\maketitle
+\tableofcontents
+\section{Preliminaries}
+In order to be well prepared for solving differential equations, one must
+understand the basics of functional analysis and linear algebra. Also, good
+skills in differentiation and integration is a prerequisite for solving even
+the simplest forms of differential equations.
+
+An ordinary differential equation (ODE) is an equation that comprises of
+real-valued functions of only one independent variable and derivatives of the
+functions with respect to the independent variable.
+\begin{example}
+\begin{equation} \label{eq:1}
+  y''(x) = 3 \sin x 
+\end{equation}
+Equation (\ref{eq:1}) is an ODE of second order, which can also be written as
+\[
+  \frac{d^2y}{dx^2} = 3 \sin x.
+\]
+This equation can be solved by integrating the equation twice. Recall that
+$\int a dx = a \int dx = a x + C, C \in \Re$, where $C$ is the integration
+constant, which is required for defining the set of all antiderivatives of the
+function, since the deriative of a constant is always zero. Integrating
+Equation (\ref{eq:1}) twice yields the \emph{solutions}: $y''(x) = 3 \sin x
+\Leftrightarrow y'(x) = \int 3 \sin x dx = 3 \int \sin x = -3 \cos x + C_1, C_1
+\in \Re \Leftrightarrow y (x) = -3 \int (cos x + C_1) dx = -3 \sin x + C_1 x +
+C_2, C_2 \in \Re$, for all $x \in \Re$. Also, note that it is useful to
+indicate for which values of the independent variable does the solutions hold,
+in this case, for all $x \in \Re$. 
+
+Moreover, every now and then it is seen written that $f' = x \Rightarrow f =
+\int x dx$, which should be written as $f' = x \Leftrightarrow f = \int x dx$.
+Obvously, the deriative of $f$ can be obtained by differentiating the
+antiderivative of $f'$.
+\end{example}
+\begin{defn}
+The order of an ordinary differential equation is given by the highest
+derivative of the function with respect to the independent variable.
+\end{defn}
+\begin{example}
+The differential equation $y''' + 2 y'' - 2 y' = 0$ is an equation of third
+order. 
+\end{example}
+\begin{defn}
+In canonical form, a set of n finite ordinary differential equations specify
+the first order derivative of each n single variable in the other variables
+without coupling between derivatives or to higher order derivatives.
+\end{defn}
+\begin{example}
+\begin{equation} \label{eq:2}
+  (1 + x^2) y' - y^2 = 1 
+\end{equation}
+Equation (\ref{eq:2}) can be written in canonical form
+\[
+  (1 + x^2) y' - y^2 = 1 \Leftrightarrow (1 + x^2) y' = y^2 + 1 \Leftrightarrow
+  y' = \frac{1 + y^2}{1 + x^2}.
+\]
+\end{example}
+\begin{example}
+\begin{equation} \label{eq:3}
+  e^{y + y''} = 3 x
+\end{equation}
+Equation (\ref{eq:3}) can be written in canonical form
+\[
+  e^{y + y''} = 3 x \Leftrightarrow y + y'' = \ln (3 x) \Leftrightarrow y'' =
+  \ln (3 x) - y.
+\]
+\end{example}
+\begin{example}
+\begin{equation} \label{eq:4}
+  (y')^2 + yy' - 4 x = 0.
+\end{equation}
+Equation (\ref{eq:4}) is a quadratic equation, which solutions are (given by
+the quadratic formula)
+\begin{equation} \label{eq:3}
+  y' = \frac{-y \pm \sqrt{y^2 + 16}} {2},
+\end{equation}
+which is not in canonical form, however equations 
+\[
+  y_1' = \frac{-y - \sqrt{y^2 + 16}} {2}
+\]
+and
+\[
+  y_2' = \frac{-y + \sqrt{y^2 + 16}} {2}
+\]
+are in canonical form.
+\end{example}
+\begin{example}
+Let $f(x, y) = x^2 y^3 + y \sin (2 x) \Rightarrow f_x = 2 x y^3 + 2 y \cos (2
+x), f_y = 3 x^2 y^2 + \sin (2 x)$.
+\end{example}
+\begin{example}
+Let $f(x, y) = e^{x - y} + x e^{y^2} - 3 e^{2 x y} \Rightarrow f_x = e^{x-y} +
+e^{y^2} - 6 y e^{2 x y}, f_y = -e^{x - y} + 2 x y e^{y^2} - 6 x e^{2 x y}$.
+\end{example}
+\begin{example}
+Let $f(x, y) = \cos(y \sin(xy)) \Rightarrow f_x = -\sin(y \sin(x y)) y^2 \cos(x
+y), f_y = -\sin(y) \sin(x y)) (\sin(x y) + x y \cos(x y))$.
+\end{example}
+\section{First Order Ordinary Differential Equations}
+\subsection{Existence and Uniqueness}
+\begin{thm} \label{thm:1}
+Let $f: G \to \Re$ and $\frac{\partial f}{\partial y}: G \to \Re$ be continuous
+on their domain $G$, and $(x_0, y_0) \in G$ is given. Let $\delta > 0$. For an
+initial value problem 
+\[
+  \left \{
+  \begin{array}{ll}
+    y' = f(x, y) \\
+    y(x_0) = y_0
+  \end{array}
+  \right.
+\]
+a solution exists on the interlval I = $]x_0 - \delta, x_0 + \delta[$, that is,
+there exists a continuously differentiable function $y: ]x_0 - \delta, x_0 +
+\delta[ \to \Re$ such that $y(x_0) = y_0$ and $y'(x) = f(x, y(x))$ for all $x
+\in I$.
+\begin{proof}
+TODO
+\end{proof}
+\end{thm}
+\begin{example}
+The initial value problem is
+\[
+  \left \{
+  \begin{array}{ll}
+    y' + e^x = \cos y \Leftrightarrow y' = \cos y - e^x \\
+    y(\pi) = 2
+  \end{array}
+  \right.
+\]
+and thus, $f(x, y) = \cos y - e^x \Rightarrow \frac{\partial f}{\partial y}(x,
+y) = -\sin(y)$. Assumptions on continuity hold: $f$ and $\frac{\partial
+f}{\partial y}$ are continuous on $\Re^2$, therefore a unique local solution
+exists for the initial value problem.
+\end{example}
+\begin{example}
+The initial value problem is
+\[
+  \left \{
+  \begin{array}{ll}
+    y' = (1 - y^2)^{1/4} + 3 x \\
+    y(1) = 0
+  \end{array}
+  \right.
+\]
+and $f(x, y) = (1 - y^2)^{1/4} + 3 x$ is defined and continuous on $A = \{ (x,
+y) | |y| \leq 1 \}$ and it has a continuous partial derivative $\frac{\partial
+f}{\partial y}(x, y) = \frac{1}{4} (1 - y^2)^{-3/4}$ defined on $B = \{ (x, y)
+| |y| < 1 \}$. A unique local solution per Theorem (\ref{thm:1}) exists since
+$(1, 0) \in B$. Note that if the initial value $y(1) = 1$ was given, $y$ would
+have not been differentiable at $(1, 1)$ and thus, the theorem could have not
+been applied.
+\end{example}
+\begin{example}
+The initial value problem is
+\[
+  \left \{
+  \begin{array}{ll}
+    y' = x^2 y^{-1}, y \neq 0 \\
+    y(1) = 0
+  \end{array}
+  \right.
+\]
+from which follows that $G_- = \{ (x, y) | y < 0 \}$ and $G_+ = \{ (x, y) | y >
+0 \}$. However, it is given that $y(1) = 0$, for which the following holds:
+$y(1) \notin G_-$ and $y(1) \notin G_+$, and thus, Theorem (\ref{thm:1}) cannot
+be applied here.
+\end{example}
+\begin{example}
+The initial value problem is
+\[
+  \left \{
+  \begin{array}{ll}
+    y' = (y - 1)^{1/3} \\
+    y(4) = 0
+  \end{array}
+  \right.
+\]
+and $f(x, y) = (y - 1)^{1/3} \Leftrightarrow \frac{\partial f}{\partial y}(x,
+y) = \frac{1}{3}(y - 1)^{-2/3}$ on half-planes $G_- = \{ y | y < 1 \}$ and $G_+
+= \{ y | y > 1 \}$. [ TODO: Conclusion after the definition of half-planes is
+confirmed. ]
+\end{example}
+\subsection{Separable Differential Equations}
+\begin{defn}
+A differential equation of first order is separable if it can be written as
+\begin{equation} \label{eq:6}
+  y'(x) = p(x) q(y),
+\end{equation}
+where $p$ and $q$ are functions with only one argument.
+\end{defn}
+Let's assume that $y$ is a constant function $y(x) = y_0, \forall x \in \Re$
+and $q(y_0) = 0$. As the derivative of a constant function is zero, $y'$ can be
+written as
+\[
+  y' = \frac{dy_0}{dx} = 0 = 0 \cdot p(x) = q(y_0) p(x) = q(y(x)) p(x).
+\]
+Solving the roots of $q(y)$ yields a constant function $y(x) = y_0$, which is
+known as the trivial solution of the differential equation.
+\begin{thm}
+If non-constant continuous functions $F$ and $G$ are defined in some interval
+$I$ and $G$ has at least one root $a \in I$, then $y' = F(x) + G(y), x, y \in
+I$ is not separable and thus cannot be expressed as $p(x) q(y)$.
+\begin{proof}
+Let's proof by contradiction. Assume that $p: x \rightarrow I$ and $q: y
+\rightarrow J$ for which $F(x) + G(y) = p(x) q(y)$ holds for all $x \in I$ and
+$y \in J$. As $G$ is a non-constant function, then $G(a) \neq G(b)$, where $b,
+c \in J$. Now $F(x) + G(b) = p(x) q(b)$ and $F(x) + G(c) = p(x) q(c)$ for all
+$x \in I$. So $F(x) = p(x) q(b) - G(b)$ and $F(x) = p(x) q(c) - G(c)
+\Rightarrow p(x) q(b) - G(b) = p(x) q(c) - G(c) \Leftrightarrow p(x) q(b) -
+G(b) + G(c) = p(x) q(c) \Leftrightarrow -G(b) + G(c) = p(x) q(c) - p(x) q(b)
+\Leftrightarrow G(c) - G(b) = p(x) q(c) - p(x) q(b) \Leftrightarrow G(b) - G(c)
+= p(x) q(b) - p(x) q(c) \Leftrightarrow p(x) = \frac{G(b) - G(c)}{q(b) - q(c)},
+\forall x \in I$, where $G(b) - G(c) \neq 0 \Rightarrow q(b) - q(c) \neq 0$,
+which yields:
+\[
+  F(x) + G(y) = q(y) \frac{G(b) - G(c)}{q(b) - q(c)} \Leftrightarrow F(x) =
+  q(y) \frac{G(b) - G(c)}{q(b) - q(c)} - G(y)
+\]
+for all $x \in I, y \in J$. [ TODO: let $y = c$ and show that $F$ is a constant
+function, which is a contradiction ].
+\end{proof}
+\end{thm}
+\begin{example}
+\begin{equation} \label{eq:7}
+  y' + 2y - x^2 = 0
+\end{equation}
+Equation (\ref{eq:7}) is not a separable differential equation
+\[
+  y' + 2y - x^2 = 0 \Leftrightarrow y' = x^2 + 2 y.
+\]
+\end{example}
+\begin{example}
+\begin{equation} \label{eq:8}
+  y' + 2x^2y - x^2 = 0
+\end{equation}
+Equation (\ref{eq:8}) is separable and can be solved by separation
+\[
+  y' + 2x^2y - x^2 = 0 \Leftrightarrow y' = x^2 - 2 x^2 y \Leftrightarrow y' =
+  x^2 (1 - 2 y) = p(x) q(y),
+\]
+where $p(x) = x^2$ and $q(y) = 1 - 2 y$. Trivial solutions are given by $q(y) =
+1 - 2 y = 0 \Leftrightarrow y(x) \equiv \frac{1}{2}, \forall x \in \Re$. The
+other solutions are solved as follows: $\frac{dy}{dx} = p(x) q(y)
+\Leftrightarrow \frac{dy}{q(y)} = p(x) dx \Leftrightarrow \frac{dy}{1 - 2 y} =
+x^2 dx, y \neq \frac{1}{2} \Leftrightarrow \int \frac{dy}{1 - 2 y} = \int x^2
+dx \Leftrightarrow -\frac{1}{2} \ln |1 - 2y| = \frac{x^3}{3} + C_0, C_0 \in \Re
+\Leftrightarrow \ln |1 - 2 y| = -\frac{2 x^3}{3} + C_1, C_1 = -2 C_0
+\Leftrightarrow 1 - 2 y = e^{-\frac{2 x^3}{3}} C_2, C_2 = \pm e^{C_1}
+\Leftrightarrow y = e^{-\frac{2 x^3}{3}} C + \frac{1}{2}, C = -\frac{C_2}{2}
+\neq 0, x \in \Re, x \neq \frac{1}{2}$.
+Combining solutions gives
+\[
+  y = e^{-\frac{2 x^3}{3}} C + \frac{1}{2}, C = -\frac{C_2}{2} \neq 0, \forall
+  x \in \Re.
+\]
+\end{example}
+\begin{example}
+\begin{equation} \label{eq:9}
+  y' = x e^{x^2 - y}
+\end{equation}
+Equation (\ref{eq:9}) is separable and can be solved by separation:
+\[
+  y' = x e^{x^2 - y} \Leftrightarrow y' = x e^{x^2} e^{-y} \Leftrightarrow y' =
+  p(x) q(y), 
+\]
+where $p(x) = x e^{x^2}$ and $q(y) = e^{-y}$. There are no trivial solutions as
+$q(y) = e^{-y} > 0, \forall y \in \Re$. Nontrivial solutions are solved as
+follows: $e^y dy = x e^{x^2} dx \Leftrightarrow \int e^y dy = \int x e^{x^2} dx
+\Leftrightarrow e^y = \frac{1}{2} e^{x^2} + C, C \in \Re \Leftrightarrow y =
+\log(\frac{1}{2} e^{x^2} + C)$.  As $\frac{1}{2} e^{x^2} + C > 0$, as $\log(z)$
+is defined only when $z > 0$, which yields two cases:
+\begin{enumerate}
+\item $C > -\frac{1}{2}$: $\frac{1}{2} e^{x^2} - \frac{1}{2} = 0$ for all $x
+\in \Re$ and thus $x \in I \in \Re$, where $I$ is the solution interval.
+\item $C \leq -\frac{1}{2}$: $\frac{1}{2} e^{x^2} - C > 0 \Leftrightarrow
+e^{x^2} > 2 C \geq 1 \Leftrightarrow x^2 > \log(2 C) \geq 0 \Leftrightarrow x
+\geq \sqrt{\log(2 C)}$ or x $\leq -\sqrt{\log(2 C)}$, and thus, there are two
+solution intervals $I_- = \{ x | x < -\sqrt{\log(2 C)} \}$ and $I_+ = \{ x | x
+> \sqrt{\log(2 C)} \} $. 
+\end{enumerate}
+Note that solution intervals are an important part of a complete solution of a
+differential equation and should always be examined as it defines the domain of
+the differential equation solutions.
+\end{example}
+\begin{example}
+\begin{equation} \label{eq:10}
+  \frac{df(t)}{dt} + t^2 f(t) = 0
+\end{equation}
+Equation (\ref{eq:10}) has trivial solutions: $f(t) \equiv 0$ for all $t \in
+\Re$ as it is clear after separation:
+\[ 
+  \frac{df(t)}{dt} + t^2 f(t) = 0 \Leftrightarrow \frac{df(t)}{dt} = p(t) q(f(t))
+  = -t^2 f(t).
+\]
+The nontrivial solutions are $\frac{df(t)}{dt} + t^2 f(t) = 0 \Leftrightarrow
+\int \frac{df(t)}{f(t)} = \int -t^2 dt \Leftrightarrow \ln |f(t)| =
+-\frac{t^3}{3} + C_1, C_1 \in \Re \Leftrightarrow |f(t)| = e^{-\frac{t^3}{3}}
+C_2, C_2 = e^{C_1} > 0 \Leftrightarrow f(t) = e^{-\frac{t^3}{3}} C_3, C_3 = \pm
+C_2 \neq 0$. Combining the trivial and nontrivial solutions yields $f(t) =
+e^{-\frac{t^3}{3}} C, C = \pm C_2$, which solution interval is $] -\infty,
+\infty [$, that is, the whole $\Re$. Another way of solving Equation
+(\ref{eq:10}) is presented after introducing the integrating factor.
+\end{example}
+\begin{example}
+\begin{equation} \label{eq:11}
+  (1 + x^2) y' - y^2 = 1, y(0) = 1
+\end{equation}
+After writing Equation (\ref{eq:11}) in canonical form, it is clear that the
+equation is separable:
+\[
+  (1 + x^2) y' - y^2 = 1 \Leftrightarrow y' = \frac{1 + y^2}{1 + x^2} = p(x) q(y),
+\]
+where $p(x) = \frac{1}{(1 + x^2)}$ and $q(y) = 1 + y^2$. There are no trivial
+solutions as $q(y) = 1 + y^2 \neq 0, \forall y \in \Re$. Also, $1 + x^2 \neq 0,
+\forall x \in \Re$. Nontrivial solutions are $\frac{dy}{dx} = \frac{1 + y^2}{1
++ x^2} \Leftrightarrow \int \frac{dy}{1 + y^2} = \int \frac{dx}{1 + x^2}
+\Leftrightarrow \arctan y = \arctan x + C_0, C_0 \in \Re$. Given the initial
+condition $y(0) = 1$, integration constant $C_0$ can be solved: $\arctan 1 =
+\arctan 0 + C_0 \Leftrightarrow \arctan 1 - \arctan 0 = C_0$. It is worth
+nothing that $\theta = \arctan z \Leftrightarrow z = \tan \theta = \frac{\sin
+\theta}{\cos \theta}$, then $\arctan \frac{\sin \theta}{\cos \theta} = \arctan
+1$ when $\frac{\cos \theta}{\sin \theta} = 1 \Leftrightarrow \theta =
+\frac{\pi}{4}$. Similarly for $\arctan 0$ yields $\theta = 0$ and then $\arctan
+1 - \arctan 0 = C_0 \Leftrightarrow C_0 = \frac{\pi}{4}$. Now $\arctan y =
+\arctan x + \frac{\pi}{4} \Leftrightarrow y = \tan(\arctan x + \frac{\pi}{4})
+\Leftrightarrow y = \frac{\tan \arctan x + \tan \frac{\pi}{4}}{1 - \tan \arctan
+x \tan \frac{\pi}{4}} \Leftrightarrow y = \frac{x + 1}{x - 1}$. The solution
+interval: $\arctan y \in ] -\pi / 2, \pi / 2 [ \Rightarrow -\pi/2 < \arctan x +
+\frac{\pi}{4}$ or $ \arctan x + \frac{\pi}{4} < \pi/2 \Rightarrow \arctan x <
+\frac{\pi}{4} \Leftrightarrow x < 1$.
+\end{example}
+\subsection{Exact Differential Equations}
+\begin{defn}
+Let $G \subseteq \Re^2$ be the domain of differentiable functions $M$ and $N$.
+If there exists a continuously differentiable function $F: G \to \Re$ such that
+$\frac{\partial F}{\partial x}(x, y) = M(x, y)$ and $\frac{\partial F}{\partial
+y}(x, y) = N(x, y)$, then $M(x,y) + N(x,y) y' = 0$ is an exact differential
+equation, where $(x, y) \in G$.
+\end{defn}
+If $M(x, y) + N(x, y) y' = 0$ is exact and $y: X \to \Re$ is one of its
+solutions, then $\frac{dF}{dx}(x, y(x)) = \frac{\partial F}{\partial x}(x,
+y(x)) + \frac{\partial F}{\partial y}(x, y(x)) y'(x) = M(x, y(x)) + N(x,
+y(x))y'(x) = 0, \forall x \in X$. From this follows that a constant $C \in \Re$
+exists such that $F(x, y) \equiv C$, where $F$ is the implicit solution of
+$M(x, y) + N(x, y) y' = 0$.
+
+Also, the reverse holds: if $F(x, y) \equiv C$ holds with some $C \in \Re$ for
+$y: X \to \Re$, then $0 = \frac{dC}{dx} = \frac{dF}{dx}(x,y(x)) = M(x, y(x)) +
+N(x, y(x)) y'(x)$.
+\begin{thm}
+Let $M: G \to \Re$ and $N: G \to \Re$ and differentiable in $G \subseteq
+\Re^2$. If $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$,
+where $(x, y) \in G$, then $M(x,y) + N(x,y) y' = 0$ is exact.
+\begin{proof}
+TODO
+\end{proof} 
+\end{thm}
+\begin{example}
+The differential equation to be solved is
+\begin{equation} \label{eq:12}
+  4 x y - 1 + (4 + 2x^2) y' = 0,
+\end{equation}
+and thus $M(x, y) = 4 x y - 1$ and $N(x, y) = 4 + 2 x^2 \Rightarrow
+\frac{\partial M}{\partial y} = \frac{\partial}{\partial y} 4 x y - 1 = 4 x$
+and $\frac{\partial N}{\partial x} = \frac{\partial}{\partial x} 4 + 2 x^2 = 4
+x \Rightarrow \frac{\partial M}{\partial y} = \frac{\partial N}{\partial x}$,
+and thus, Equation (\ref{eq:12}) is exact from which follows that there exists
+an integral function $F$ such that $\frac{\partial F}{\partial x} = M$ and
+$\frac{\partial F}{\partial y} = N$.
+\[
+  \int M(x, y) dx = \int 4 xy - 1 = 2 x^2 y - x + z(y)
+\]
+$z$ is either a constant or depends on $y$: $\frac{\partial F}{\partial y} = N
+\Leftrightarrow 2 x^2 - x + z'(y) = 4 + 2 x^2$ from which follows that $z'(y) =
+4 \Leftarrow z(y) = 4 y$. Now $F(x, y) = C, C \in \Re$. Implicit solution is $2
+x^2 y - x + 4 y = C = F(x, y)$ and explicit solution is $C = y (2 x^2 + 4) - x
+\Leftrightarrow y = \frac{C + x}{2 x^2 + 4}$.
+\end{example}
+\begin{example}
+The differential equation to be solved is
+\begin{equation} \label{eq:13}
+  \sin x \sin y - (\cos x \cos y) y' = 0
+\end{equation}
+and thus $M(x, y) = \sin x \sin y$ and $N(x, y) = -\cos x \cos y \Rightarrow
+\frac{\partial M}{\partial y} = \frac{\partial}{\partial y} \sin x \sin y = -
+\cos x \sin y$ and $\frac{\partial N}{\partial y} = \frac{\partial}{\partial y}
+\cos x \cos y = -\cos x \sin y \Rightarrow \frac{\partial N}{\partial x} =
+\frac{\partial M}{\partial y}$ and thus Equation (\ref{eq:13}) is an exact
+equation.
+\[
+  \int M(x, y) dx = \int \sin x \sin y = -\cos x \sin y + z(y)
+\]
+$z$ is either a constant or depends on $y$: $\frac{\partial F}{\partial y} = N
+\Leftrightarrow \frac{\partial}{\partial y} -\cos x \sin y + z(y) = -\cos x
+\cos y \Leftrightarrow -\cos x \cos y = -\cos x \cos y + z'(y) \Leftrightarrow
+z'(y) = 0 \Leftarrow z(y) = 0$ and $F(x, y) = -\cos x \sin y$. The implicit
+solution is $-\cos x \sin y = C_0, C_0 \in [-1, 1] \Leftrightarrow \cos x \sin
+y = C_2 \in [-1, 1] \in \Re$.
+\end{example}
+\begin{example}
+The differential equlation to be solved is
+\begin{equation} \label{eq:14}
+  x^3 y^2 + y^3 x^2 y' = 0
+\end{equation}
+and thus $M(x, y) = x^3 y^2$ and $N(x, y) = y^3 x^2 \Rightarrow \frac{\partial
+M}{\partial y} = \frac{\partial}{\partial y} x^3 y^2 = 2 y x^3 $ and
+$\frac{\partial N}{\partial x} = \frac{\partial}{\partial x} y^3 x^2 = 2 x y^3
+\Rightarrow \frac{\partial N}{\partial x} \neq \frac{\partial M}{\partial y}$
+and thus Equation (\ref{eq:14}) is not an exact equation.
+\end{example}
+\end{document}
